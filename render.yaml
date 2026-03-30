@@ -15,7 +15,8 @@ projects:
         description: everywhere
       postgresMajorVersion: "18"
       diskSizeGB: 15
-
+    
+    services:
     - type: web
       name: api-gateway
       runtime: docker
@@ -34,17 +35,6 @@ projects:
       name: webhook-logger
       runtime: docker
       repo: https://github.com/hivelai/webhook-logger
-      branch: release-render
-      plan: starter
-      region: singapore
-      dockerContext: .
-      dockerfilePath: ./Dockerfile
-      autoDeployTrigger: commit
-
-    - type: web
-      name: schedulers
-      runtime: docker
-      repo: https://github.com/hivelai/schedulers
       branch: release-render
       plan: starter
       region: singapore
