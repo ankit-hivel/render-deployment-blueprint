@@ -1,0 +1,53 @@
+# Exported from Render on 2026-03-30T07:14:46Z
+version: "1"
+projects:
+- name: My project
+  environments:
+  - name: Production
+    databases:
+    - name: postgres-db-svc
+      databaseName: insightly
+      user: ankit
+      plan: basic-1gb
+      region: singapore
+      ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
+      postgresMajorVersion: "18"
+      diskSizeGB: 15
+
+    - type: web
+      name: api-gateway
+      runtime: docker
+      repo: https://github.com/hivelai/api-gateway
+      branch: release-render
+      plan: starter
+      region: singapore
+      healthCheckPath: /health
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      domains:
+      - app.gethivel.com
+      autoDeployTrigger: commit
+
+    - type: web
+      name: webhook-logger
+      runtime: docker
+      repo: https://github.com/hivelai/webhook-logger
+      branch: release-render
+      plan: starter
+      region: singapore
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      autoDeployTrigger: commit
+
+    - type: web
+      name: schedulers
+      runtime: docker
+      repo: https://github.com/hivelai/schedulers
+      branch: release-render
+      plan: starter
+      region: singapore
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      autoDeployTrigger: commit
